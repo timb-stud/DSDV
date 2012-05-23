@@ -1,3 +1,7 @@
+/**
+ * Test
+ */
+
 package de.htw;
 
 import java.io.Serializable;
