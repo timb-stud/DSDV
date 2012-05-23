@@ -68,16 +68,14 @@ public class DsdvService implements RuntimeService, NeighborDiscoveryListener {
 
 	@Override
 	public void setNeighborData(NeighborDiscoveryData neighborData) {
-		Address neighborAddress = neighborData.getSender();
-		table.put(neighborAddress, neighborAddress, 1, 2); //TODO seqNum really == 2 ???
-		table.incSeqNum(deviceId);
+//		Address neighborAddress = neighborData.getSender();
+//		table.put(neighborAddress, neighborAddress, 1, 2); //TODO seqNum really == 2 ???
+		table.incSeqNum(deviceId, 2);
 		RoutingTable tableCopy = table.copy();
 		table.setAllNextHop(deviceId);
 		table.incAllDistanceToDestination();
 		RouteTableMessage msg = new RouteTableMessage(tableCopy.getMap());
 		linkLayer.sendBroadcast(msg);
-		System.out.println("Table " + deviceId);
-		System.out.println(table);
 	}
 
 	@Override
@@ -85,16 +83,12 @@ public class DsdvService implements RuntimeService, NeighborDiscoveryListener {
 	}
 
 	@Override
-	public void removeNeighborData(Address linkLayerAddress) {
-		/*
-		oneHopNeighbors.remove(linkLayerAddress);
-		twoHopNeighbors.remove(linkLayerAddress);
-		System.out.println(runtimeOperatingSystem.getDeviceID() + " #> " + linkLayerAddress);
-		System.out.println("1h(" + runtimeOperatingSystem.getDeviceID() + ") = " + oneHopNeighbors);
-		System.out.println("2h(" + runtimeOperatingSystem.getDeviceID() + ") = " + twoHopNeighbors);
-		AddressSetMessage message = new AddressSetMessage(oneHopNeighbors);
-		linkLayer.sendBroadcast(message);
-		*/
+	public void removeNeighborData(Address linkLayerAddress) { //TODO check
+		table.incSeqNum(linkLayerAddress, 1);
+		table.setDistanceToDestinationToInfinity(linkLayerAddress);
+		RoutingTable tableCopy = table.copy();
+		RouteTableMessage msg = new RouteTableMessage(tableCopy.getMap());
+		linkLayer.sendBroadcast(msg);
 	}
 
 	@Override
@@ -119,10 +113,16 @@ public class DsdvService implements RuntimeService, NeighborDiscoveryListener {
 		if(sender.toString().equals(deviceId.toString())){
 			return ;
 		}
-		
-		if (table.merge(routeTable) || table.isOwnReachabilityCorrect(routeTable, deviceId)){
+		System.out.println("ownTable: " + table);
+		System.out.println("otherTable: " + routeTable);
+		boolean merge = table.merge(routeTable);
+		boolean isOwnReachabilityCorrect = table.isOwnReachabilityCorrect(routeTable, deviceId);
+		System.out.println("merge: " + merge + "  isOwn: " + isOwnReachabilityCorrect);
+		if (merge || !isOwnReachabilityCorrect){
 			RouteTableMessage msg = new RouteTableMessage(table.getMap());
 			linkLayer.sendBroadcast(msg);
 		}
+		System.out.println("Table " + deviceId);
+		System.out.println(table);
 	}
 }

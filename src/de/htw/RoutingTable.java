@@ -16,10 +16,10 @@ public class RoutingTable {
 		map.put(destination, drd);
 	}
 	
-	public void incSeqNum(Address device){
+	public void incSeqNum(Address device, long step){
 		DeviceRouteData drd = map.get(device);
 		long seqNum = drd.getSequenceNumber();
-		drd.setSequenceNumber(seqNum + 2);
+		drd.setSequenceNumber(seqNum + step);
 	}
 	
 	public RoutingTable copy(){
@@ -46,6 +46,10 @@ public class RoutingTable {
 		}
 	}
 	
+	public void setDistanceToDestinationToInfinity(Address deviceAddress){
+		map.get(deviceAddress).setDistanceToDestination(-1);
+	}
+	
 	public HashMap<Address, DeviceRouteData> getMap() {
 		return map;
 	}
@@ -59,10 +63,10 @@ public class RoutingTable {
 			DeviceRouteData ownDrd = otherMap.get(deviceId);
 			if (ownDrd.getDistanceToDestination() == -1){
 				otherMap.put(deviceId, map.get(deviceId));
-				return true;
+				return false;
 			}
 		}
-		return false;
+		return true;
 	}
 	
 	public boolean merge(HashMap<Address, DeviceRouteData> otherMap){
@@ -71,7 +75,7 @@ public class RoutingTable {
 			DeviceRouteData otherDrd = otherMap.get(a);
 			if(map.containsKey(a)){
 				DeviceRouteData ownDrd = map.get(a);
-				if(ownDrd.getSequenceNumber() <= otherDrd.getSequenceNumber() 
+				if(ownDrd.getSequenceNumber() < otherDrd.getSequenceNumber() 
 						|| ownDrd.getSequenceNumber() == otherDrd.getSequenceNumber() 
 						&& ownDrd.getDistanceToDestination() > otherDrd.getDistanceToDestination()){
 					 map.put(a, otherDrd);
