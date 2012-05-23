@@ -42,6 +42,9 @@ public class DsdvService implements RuntimeService, NeighborDiscoveryListener {
 		this.neighborID = neighborID;
 		
 		//beacon = new BeaconContent();
+		
+		routeTable = new HashMap<Address, DeviceRouteData>();
+		//DeviceRouteData routeData = new DeviceRouteData(runtimeOperatingSystem.getDeviceID(), 0, 0);
 	}	
 	
 	@Override
