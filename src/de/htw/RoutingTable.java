@@ -91,6 +91,21 @@ public class RoutingTable {
 
 	@Override
 	public String toString() {
-		return "RoutingTable [map=" + map + "]";
+		StringBuilder sb = new StringBuilder();
+		sb.append("| Destination | NexthHop | distToDest | seqNum |\n");
+		sb.append("|-------------|----------|------------|--------|\n");
+		for(Address a: map.keySet()){
+			DeviceRouteData drd = map.get(a);
+			sb.append("|");
+			sb.append(String.format("%7s      ", a));
+			sb.append("|");
+			sb.append(String.format("%6s    ", drd.getNextHop()));
+			sb.append("|");
+			sb.append(String.format("%7s     ", drd.getDistanceToDestination()));
+			sb.append("|");
+			sb.append(String.format("%5s   ", drd.getSequenceNumber()));
+			sb.append("|\n");
+		}
+		return sb.toString();
 	}
 }
