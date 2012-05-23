@@ -49,6 +49,41 @@ public class RoutingTable {
 	public HashMap<Address, DeviceRouteData> getMap() {
 		return map;
 	}
+	
+	public DeviceRouteData getDeviceRouteDate(Address deviceAddress){
+		return map.get(deviceAddress);
+	}
+	
+	public boolean isOwnReachabilityCorrect(HashMap<Address, DeviceRouteData> otherMap, Address deviceId){
+		if(otherMap.containsKey(deviceId)){
+			DeviceRouteData ownDrd = otherMap.get(deviceId);
+			if (ownDrd.getDistanceToDestination() == -1){
+				otherMap.put(deviceId, map.get(deviceId));
+				return true;
+			}
+		}
+		return false;
+	}
+	
+	public boolean merge(HashMap<Address, DeviceRouteData> otherMap){
+		boolean hasChanged = false;
+		for(Address a: otherMap.keySet()){
+			DeviceRouteData otherDrd = otherMap.get(a);
+			if(map.containsKey(a)){
+				DeviceRouteData ownDrd = map.get(a);
+				if(ownDrd.getSequenceNumber() <= otherDrd.getSequenceNumber() 
+						|| ownDrd.getSequenceNumber() == otherDrd.getSequenceNumber() 
+						&& ownDrd.getDistanceToDestination() > otherDrd.getDistanceToDestination()){
+					 map.put(a, otherDrd);
+					 hasChanged = true;
+				}
+			}else{
+				map.put(a, otherDrd);
+				hasChanged = true;
+			}
+		}
+		return hasChanged;
+	}
 
 	@Override
 	public String toString() {

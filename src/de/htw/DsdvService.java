@@ -113,21 +113,16 @@ public class DsdvService implements RuntimeService, NeighborDiscoveryListener {
 		
 		table.put(deviceId, deviceId, 0, 0);
 	}
+	
 
 	public void handleMessage(Address sender, HashMap<Address, DeviceRouteData> routeTable) {
-		/*if(!sender.toString().equals(runtimeOperatingSystem.getDeviceID().toString())){
-			HashSet<Address> as = new HashSet<Address>();
-			for(Address address: addressSet){ 
-				if(!address.toString().equals(runtimeOperatingSystem.getDeviceID().toString())){
-					as.add(address);
-				}
-			}
-			if(!as.isEmpty()){
-				twoHopNeighbors.put(sender, as);
-			} else {
-				twoHopNeighbors.remove(sender);
-			}
-			System.out.println("2h(" + runtimeOperatingSystem.getDeviceID() + ") = " + twoHopNeighbors + " || from " + sender);
-		}*/
+		if(sender.toString().equals(deviceId.toString())){
+			return ;
+		}
+		
+		if (table.merge(routeTable) || table.isOwnReachabilityCorrect(routeTable, deviceId)){
+			RouteTableMessage msg = new RouteTableMessage(table.getMap());
+			linkLayer.sendBroadcast(msg);
+		}
 	}
 }
