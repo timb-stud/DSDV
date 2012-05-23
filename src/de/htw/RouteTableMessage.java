@@ -1,4 +1,5 @@
 package de.htw;
+import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Set;
 
@@ -13,7 +14,7 @@ import de.uni_trier.jane.visualization.shapes.RectangleShape;
 import de.uni_trier.jane.visualization.shapes.Shape;
 
 
-public class RouteTableMessage implements LinkLayerMessage {
+public class RouteTableMessage implements LinkLayerMessage, Serializable {
 
 	private static final long serialVersionUID = -4389492289287873189L;
 

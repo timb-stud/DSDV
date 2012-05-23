@@ -25,13 +25,14 @@ public class DsdvService implements RuntimeService, NeighborDiscoveryListener {
 	public static ServiceID serviceID;
 	private ServiceID linkLayerID;
 	private ServiceID neighborID;
+	private Address deviceId;
 	
 	
 	private LinkLayer_async linkLayer;
 	private NeighborDiscoveryService_sync neighborService;
 	private RuntimeOperatingSystem runtimeOperatingSystem;
 	
-	private HashMap<Address, DeviceRouteData> routeTable;
+	private RoutingTable table = new RoutingTable();
 	
 	public DsdvService(ServiceID linkLayerID, ServiceID neighborID) {
 		super();
@@ -42,9 +43,6 @@ public class DsdvService implements RuntimeService, NeighborDiscoveryListener {
 		this.neighborID = neighborID;
 		
 		//beacon = new BeaconContent();
-		
-		routeTable = new HashMap<Address, DeviceRouteData>();
-		//DeviceRouteData routeData = new DeviceRouteData(runtimeOperatingSystem.getDeviceID(), 0, 0);
 	}	
 	
 	@Override
@@ -70,13 +68,14 @@ public class DsdvService implements RuntimeService, NeighborDiscoveryListener {
 
 	@Override
 	public void setNeighborData(NeighborDiscoveryData neighborData) {
-		/*
-		oneHopNeighbors.add(neighborData.getSender());
-		System.out.println(runtimeOperatingSystem.getDeviceID() + "->" + neighborData.getSender());
-		System.out.println("1h(" + runtimeOperatingSystem.getDeviceID() + ") = " + oneHopNeighbors);
-		AddressSetMessage message = new AddressSetMessage(oneHopNeighbors);
-		linkLayer.sendBroadcast(message);
-		*/
+		Address neighborAddress = neighborData.getSender();
+		table.put(neighborAddress, neighborAddress, 1, 2); //TODO seqNum really == 2 ???
+		table.incSeqNum(deviceId);
+		RoutingTable tableCopy = table.copy();
+		table.setAllNextHop(deviceId);
+		table.incAllDistanceToDestination();
+		RouteTableMessage msg = new RouteTableMessage(tableCopy.getMap());
+		linkLayer.sendBroadcast(msg);
 	}
 
 	@Override
@@ -99,20 +98,18 @@ public class DsdvService implements RuntimeService, NeighborDiscoveryListener {
 	@Override
 	public void start(RuntimeOperatingSystem runtimeOperatingSystem) {
 		this.runtimeOperatingSystem = runtimeOperatingSystem;
+		this.deviceId = runtimeOperatingSystem.getDeviceID();
 		
 		//Am LinkLayer registrieren, um diesen aus TestService heraus nutzen zu kšnnen
-				linkLayer=(LinkLayer_async)runtimeOperatingSystem.getSignalListenerStub(linkLayerID,
-							LinkLayer_async.class);
+		linkLayer=(LinkLayer_async)runtimeOperatingSystem.getSignalListenerStub(linkLayerID, LinkLayer_async.class);
 				
-				runtimeOperatingSystem.registerAtService(linkLayerID, LinkLayer_async.class);
+		runtimeOperatingSystem.registerAtService(linkLayerID, LinkLayer_async.class);
 				
-				//Am Nachbarschaftsservice registrieren, um diesen aus TestService heraus nutzen zu kšnnen
-				neighborService = (NeighborDiscoveryService_sync)runtimeOperatingSystem.getSignalListenerStub(neighborID,
-						NeighborDiscoveryService_sync.class);
-				
-				runtimeOperatingSystem.registerAtService(neighborID,
-						NeighborDiscoveryService.class);
-
+		//Am Nachbarschaftsservice registrieren, um diesen aus TestService heraus nutzen zu kšnnen
+		neighborService = (NeighborDiscoveryService_sync)runtimeOperatingSystem.getSignalListenerStub(neighborID, NeighborDiscoveryService_sync.class);	
+		runtimeOperatingSystem.registerAtService(neighborID, NeighborDiscoveryService.class);
+		
+		table.put(deviceId, deviceId, 0, 0);
 	}
 
 	public void handleMessage(Address sender, HashMap<Address, DeviceRouteData> routeTable) {
