@@ -1,7 +1,7 @@
 /**
  * Test
  * 
- * Test Templin
+ * Templin ist doof
  */
 
 package de.htw;
