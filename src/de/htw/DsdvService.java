@@ -20,7 +20,7 @@ import de.uni_trier.jane.visualization.shapes.Shape;
 
 
 
-public class DsdvService implements RuntimeService, NeighborDiscoveryListener, TwoHopService_sync {
+public class DsdvService implements RuntimeService, NeighborDiscoveryListener {
 
 	public static ServiceID serviceID;
 	private ServiceID linkLayerID;
@@ -31,8 +31,7 @@ public class DsdvService implements RuntimeService, NeighborDiscoveryListener, T
 	private NeighborDiscoveryService_sync neighborService;
 	private RuntimeOperatingSystem runtimeOperatingSystem;
 	
-	private HashSet<Address> oneHopNeighbors = new HashSet<Address>();
-	private HashMap<Address, Set<Address>> twoHopNeighbors = new HashMap<Address, Set<Address>>();
+	private HashMap<Address, DeviceRouteData> routeTable;
 	
 	public DsdvService(ServiceID linkLayerID, ServiceID neighborID) {
 		super();
@@ -129,15 +128,4 @@ public class DsdvService implements RuntimeService, NeighborDiscoveryListener, T
 			System.out.println("2h(" + runtimeOperatingSystem.getDeviceID() + ") = " + twoHopNeighbors + " || from " + sender);
 		}*/
 	}
-
-	@Override
-	public Set<Address> getOneHopNeighbors() {
-		return oneHopNeighbors;
-	}
-
-	@Override
-	public Set<Address> getTwoHopNeighborsFrom(Address device) {
-		return twoHopNeighbors.get(device);
-	}
-
 }
