@@ -49,4 +49,9 @@ public class RoutingTable {
 	public HashMap<Address, DeviceRouteData> getMap() {
 		return map;
 	}
+
+	@Override
+	public String toString() {
+		return "RoutingTable [map=" + map + "]";
+	}
 }

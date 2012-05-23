@@ -76,6 +76,8 @@ public class DsdvService implements RuntimeService, NeighborDiscoveryListener {
 		table.incAllDistanceToDestination();
 		RouteTableMessage msg = new RouteTableMessage(tableCopy.getMap());
 		linkLayer.sendBroadcast(msg);
+		System.out.println("Table " + deviceId);
+		System.out.println(table);
 	}
 
 	@Override
