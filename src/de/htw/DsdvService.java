@@ -97,6 +97,9 @@ public class DsdvService implements RuntimeService, NeighborDiscoveryListener {
 		RoutingTable tableCopy = table.copy();
 		RouteTableMessage msg = new RouteTableMessage(tableCopy.getMap());
 		linkLayer.sendBroadcast(msg);
+		
+		System.out.println("After remove Table " + deviceId);
+		System.out.println(table);
 	}
 
 	@Override
