@@ -124,7 +124,10 @@ public class DsdvService implements RuntimeService, NeighborDiscoveryListener {
 		boolean merge = table.merge(routeTable, deviceId);
 		System.out.println("merge: " + merge + "  isOwn: " + isOwnReachabilityCorrect);
 		if (merge || !isOwnReachabilityCorrect){
-			RouteTableMessage msg = new RouteTableMessage(table.getMap());
+			RoutingTable tableCopy = table.copy();
+			tableCopy.setAllNextHop(deviceId);
+			tableCopy.incAllDistanceToDestination();
+			RouteTableMessage msg = new RouteTableMessage(tableCopy.getMap());
 			linkLayer.sendBroadcast(msg);
 		}
 		System.out.println("Table " + deviceId + " after handling MSG from " + sender);
