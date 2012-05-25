@@ -72,8 +72,8 @@ public class DsdvService implements RuntimeService, NeighborDiscoveryListener {
 //		table.put(neighborAddress, neighborAddress, 1, 2); //TODO seqNum really == 2 ???
 		table.incSeqNum(deviceId, 2);
 		RoutingTable tableCopy = table.copy();
-		table.setAllNextHop(deviceId);
-		table.incAllDistanceToDestination();
+		tableCopy.setAllNextHop(deviceId);
+		tableCopy.incAllDistanceToDestination();
 		RouteTableMessage msg = new RouteTableMessage(tableCopy.getMap());
 		linkLayer.sendBroadcast(msg);
 	}
