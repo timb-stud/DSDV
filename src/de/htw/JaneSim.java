@@ -48,18 +48,19 @@ public class JaneSim extends Simulation {
 		(new Position[]
 		              {
 						new Position(10,10),
-						new Position(10,100),
-						new Position(100,10),
-						new Position(50, 50)
+						new Position(60,10),
+						new Position(110,10),
+						new Position(50, 100),
+						new Position(100, 100)
 					  },
-						new Rectangle(new Extent(100,100))
+						new Rectangle(new Extent(200,200))
 		);
 		
 		MobilitySource mobilitySource = null;
 		mobilitySource = new ClickAndPlayMobilitySourceLocation(fixed,
 				20.0,
 				50.0, 
-				4, 
+				5, 
 				1.0);
 		
 		ExtendedClickAndPlaySimulationGUI gui = new ExtendedClickAndPlaySimulationGUI(
