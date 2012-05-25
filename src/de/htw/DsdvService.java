@@ -119,7 +119,7 @@ public class DsdvService implements RuntimeService, NeighborDiscoveryListener {
 		//System.out.println("ownTable: \n" + table + "\n");
 		//System.out.println("otherTable: \n" + routeTable + "\n");
 		boolean isOwnReachabilityCorrect = table.isOwnReachabilityCorrect(routeTable, deviceId);
-		boolean merge = table.merge(routeTable);
+		boolean merge = table.merge(routeTable, deviceId);
 		System.out.println("merge: " + merge + "  isOwn: " + isOwnReachabilityCorrect);
 		if (merge || !isOwnReachabilityCorrect){
 			RouteTableMessage msg = new RouteTableMessage(table.getMap());
