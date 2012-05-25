@@ -70,7 +70,7 @@ public class RoutingTable {
 		return true;
 	}
 	
-	public boolean merge(HashMap<Address, DeviceRouteData> otherMap, Address deviceId){ //TODO: check if to ignore/skip own node informations in otherMap??
+	public boolean merge(HashMap<Address, DeviceRouteData> otherMap, Address deviceId){
 		boolean hasChanged = false;
 		for(Address a: otherMap.keySet()){
 			if(a.toString().equals(deviceId.toString()))
