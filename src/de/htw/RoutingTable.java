@@ -79,9 +79,10 @@ public class RoutingTable {
 			DeviceRouteData otherDrd = otherMap.get(a);
 			if(map.containsKey(a)){
 				DeviceRouteData ownDrd = map.get(a);
-				if((ownDrd.getSequenceNumber() < otherDrd.getSequenceNumber() 
-						|| ownDrd.getSequenceNumber() == otherDrd.getSequenceNumber() )
-						&& ownDrd.getDistanceToDestination() > otherDrd.getDistanceToDestination()){
+				if(ownDrd.getSequenceNumber() < otherDrd.getSequenceNumber() 
+						|| (ownDrd.getSequenceNumber() == otherDrd.getSequenceNumber()
+						&& ownDrd.getDistanceToDestination() > otherDrd.getDistanceToDestination())){
+					System.out.println("put: " + otherDrd);
 					 map.put(a, otherDrd);
 					 hasChanged = true;
 				}
