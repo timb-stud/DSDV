@@ -68,6 +68,7 @@ public class DsdvService implements RuntimeService, NeighborDiscoveryListener {
 
 	@Override
 	public void setNeighborData(NeighborDiscoveryData neighborData) {
+		System.out.println(deviceId + " --> " + neighborData);
 //		Address neighborAddress = neighborData.getSender();
 //		table.put(neighborAddress, neighborAddress, 1, 2); //TODO seqNum really == 2 ???
 		table.incSeqNum(deviceId, 2);
@@ -87,6 +88,7 @@ public class DsdvService implements RuntimeService, NeighborDiscoveryListener {
 
 	@Override
 	public void removeNeighborData(Address linkLayerAddress) { //TODO check
+		System.out.println(deviceId + " ##> " + linkLayerAddress);
 		table.incSeqNum(linkLayerAddress, 1);
 		table.setDistanceToDestinationToInfinity(linkLayerAddress);
 		RoutingTable tableCopy = table.copy();
