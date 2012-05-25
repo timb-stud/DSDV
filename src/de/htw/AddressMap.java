@@ -13,8 +13,9 @@ public class AddressMap extends HashMap<Address, DeviceRouteData>{
 
 	@Override
 	public DeviceRouteData get(Object device) {
-		return (super.get(device) != null) ? 
-				super.get(device) : manualFindDrd(device);
+		DeviceRouteData drd = super.get(device);
+		return (drd != null) ? 
+				drd : manualFindDrd(device);
 	}
 	
 	private DeviceRouteData manualFindDrd(Object device){
