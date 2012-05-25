@@ -1,9 +1,3 @@
-/**
- * Test
- * 
- * Templin ist doof
- */
-
 package de.htw;
 
 import java.io.Serializable;
