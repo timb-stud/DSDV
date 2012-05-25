@@ -62,6 +62,7 @@ public class RoutingTable {
 		if(otherMap.containsKey(deviceId)){
 			DeviceRouteData ownDrd = otherMap.get(deviceId);
 			if (ownDrd.getDistanceToDestination() == -1){
+				this.incSeqNum(deviceId, 2);
 				otherMap.put(deviceId, map.get(deviceId));
 				return false;
 			}
