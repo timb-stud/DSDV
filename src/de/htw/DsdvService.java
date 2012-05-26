@@ -92,8 +92,9 @@ public class DsdvService implements RuntimeService, NeighborDiscoveryListener {
 	@Override
 	public void removeNeighborData(Address linkLayerAddress) { //TODO check
 		System.out.println(deviceId + " ##> " + linkLayerAddress);
-		table.incSeqNum(linkLayerAddress, 1);
-		table.setDistanceToDestinationToInfinity(linkLayerAddress);
+		//table.incSeqNum(linkLayerAddress, 1);
+		//table.setDistanceToDestinationToInfinity(linkLayerAddress);
+		table.updateMapWithRemoveInformations(linkLayerAddress);
 		RoutingTable tableCopy = table.copy();
 		RouteTableMessage msg = new RouteTableMessage(tableCopy.getMap());
 		linkLayer.sendBroadcast(msg);

@@ -68,6 +68,16 @@ public class RoutingTable {
 		drd.setDistanceToDestination(-1);
 	}
 	
+	public void updateMapWithRemoveInformations(Address deviceAddress){
+		for (Address a : map.keySet()){
+			DeviceRouteData drd = map.get(a);
+			if (drd.getNextHop().toString().equals(deviceAddress.toString())){
+				drd.setDistanceToDestination(-1);
+				incSeqNum(a, 1); //TODO: check if the sequence number also need to increment
+			}
+		}
+	}
+	
 	public HashMap<Address, DeviceRouteData> getMap() {
 		return map;
 	}
