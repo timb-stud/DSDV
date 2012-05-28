@@ -5,10 +5,10 @@ import java.util.HashMap;
 import de.uni_trier.jane.basetypes.Address;
 
 public class RoutingTable {
-	private HashMap<Address, DeviceRouteData> map;
+	private AddressMap map;
 	
 	public RoutingTable() {
-		map = new HashMap<Address, DeviceRouteData>();
+		map = new AddressMap();
 	}
 	
 	public void put(Address destination, Address nextHop, long distanceToDestination, long sequenceNumber){
@@ -18,22 +18,8 @@ public class RoutingTable {
 	
 	public void incSeqNum(Address device, long step){
 		DeviceRouteData drd = map.get(device);
-		
-		if(drd == null){
-			drd = manualFindDrd(device);
-		}
-		
 		long seqNum = drd.getSequenceNumber();
 		drd.setSequenceNumber(seqNum + step);
-	}
-	
-	private DeviceRouteData manualFindDrd(Address device){
-		for (Address a : map.keySet()){
-			if(a.toString().equals(device.toString())){
-				return map.get(a);
-			}
-		}
-		return null;
 	}
 	
 	public RoutingTable copy(){
@@ -62,9 +48,6 @@ public class RoutingTable {
 	
 	public void setDistanceToDestinationToInfinity(Address deviceAddress){
 		DeviceRouteData drd = map.get(deviceAddress);
-		if(drd == null){
-			drd = manualFindDrd(deviceAddress);
-		}
 		drd.setDistanceToDestination(-1);
 	}
 	
