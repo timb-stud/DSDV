@@ -20,7 +20,7 @@ import de.uni_trier.jane.visualization.shapes.Shape;
 
 
 
-public class DsdvService implements RuntimeService, NeighborDiscoveryListener {
+public class DsdvService implements RuntimeService, NeighborDiscoveryListener, DSDVService_sync {
 
 	public static ServiceID serviceID;
 	private ServiceID linkLayerID;
@@ -141,5 +141,20 @@ public class DsdvService implements RuntimeService, NeighborDiscoveryListener {
 		}
 		System.out.println("Table " + deviceId + " after handling MSG from " + sender);
 		System.out.println(table);
+	}
+
+	@Override
+	public Set getAllReachableDevices() {
+		return table.getMap().entrySet();
+	}
+
+	@Override
+	public Address getNextHop(Address destination) {
+		return table.getNextHop(destination);
+	}
+
+	@Override
+	public int getHopCount(Address destination) {
+		return table.getHopCount(destination);
 	}
 }

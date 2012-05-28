@@ -78,6 +78,14 @@ public class RoutingTable {
 		}
 	}
 	
+	public Address getNextHop(Address deviceId){
+		return map.get(deviceId).getNextHop();
+	}
+	
+	public int getHopCount(Address destination) {
+		return (int) map.get(destination).getDistanceToDestination();
+	}
+	
 	public HashMap<Address, DeviceRouteData> getMap() {
 		return map;
 	}
