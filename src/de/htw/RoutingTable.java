@@ -42,6 +42,8 @@ public class RoutingTable {
 		for(Address a : map.keySet()){
 			DeviceRouteData drd = map.get(a);
 			long dtd = drd.getDistanceToDestination();
+			if(dtd == -1)
+				continue;
 			drd.setDistanceToDestination(dtd + 1);
 		}
 	}
