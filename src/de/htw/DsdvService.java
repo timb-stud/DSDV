@@ -1,6 +1,7 @@
 package de.htw;
 
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Set;
 
@@ -126,6 +127,14 @@ public class DsdvService implements RuntimeService, NeighborDiscoveryListener, D
 			RouteTableMessage msg = new RouteTableMessage(tableCopy.getMap());
 			linkLayer.sendBroadcast(msg);
 		}
+	}
+	
+	public Address getDeviceAddress(){
+		return table.getDeviceAddress();
+	}
+	
+	public ArrayList<Address> getDeviceTableAddresses(){
+		return table.getDeviceTableAddresses();
 	}
 	
 	public String printTable(){

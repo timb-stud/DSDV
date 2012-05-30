@@ -1,5 +1,6 @@
 package de.htw;
 
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -24,9 +25,9 @@ import de.uni_trier.jane.simulation.kernel.TimeExceeded;
 
 public class JaneSim extends Simulation implements Runnable{
 
-	private LinkedList<DsdvService> testServiceList = new LinkedList<DsdvService>();
+	private ArrayList<DsdvService> testServiceList = new ArrayList<DsdvService>();
 	
-	public LinkedList<DsdvService> getDsdvServiceList(){
+	public ArrayList<DsdvService> getDsdvServiceList(){
 		return testServiceList;
 	}
 	

@@ -1,8 +1,11 @@
 package de.htw;
 
 import java.io.BufferedInputStream;
+import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.lang.reflect.Array;
+import java.util.ArrayList;
 import java.util.LinkedList;
 
 import de.uni_trier.jane.basetypes.Address;
@@ -10,7 +13,7 @@ import de.uni_trier.jane.simulation.Simulation;
   
 public class Dialog {
 
-	private LinkedList<DsdvService> dsdvList;
+	private ArrayList<DsdvService> dsdvList;
     enum Function {ENDE, PRINTTABLE, REACHABLE, NEXTHOP}
                      
     private String menue;
@@ -61,7 +64,9 @@ public class Dialog {
      
     private Function chooseFunction() throws IOException {
         System.out.print(menue);
-        int input = System.in.read() -48;
+        InputStreamReader converter = new InputStreamReader(System.in);
+        BufferedReader in = new BufferedReader(converter);
+        int input = Integer.parseInt(in.readLine().toString());
         if (input >= 0 && input < Function.values().length)
             return Function.values()[input];
         else
@@ -69,19 +74,29 @@ public class Dialog {
     }
     
     
-    private void exexuteChoosenFunction(Function funktion) {
+    private void exexuteChoosenFunction(Function funktion) throws IOException {
+        InputStreamReader converter = new InputStreamReader(System.in);
+        BufferedReader in = new BufferedReader(converter);
        switch (funktion){
 	       case NEXTHOP:{
 	    	
-/*	       	int i = 0;
+	       	int i = 0;
 	       	for(DsdvService d : dsdvList){
+	       		System.out.println(i + " - " + d.getDeviceAddress());
 	       		i++;
-	       		//System.out.println(i + " - " d.);
 	       	}
-	       	System.out.print("Bitte Zielknoten Adresse eingeben: ");
-	       	int input = System.in.read() -48;
-	       	DsdvService[] a = dsdvList.toArray()	       	
-	       	a[input].getNextHop(destination);*/
+	       	System.out.print("Wähle Knoten: ");
+	       	int inputNode = Integer.parseInt(in.readLine().toString());
+	       	System.out.println("Knoten Nr: " + inputNode);
+	       	i = 0;
+	       	for (Address ad : dsdvList.get(inputNode).getDeviceTableAddresses()){
+	       		System.out.println(i + " - " + ad);
+	       		i++;
+	       	}
+	       	
+	       	System.out.print("Wähle Addresse: ");
+	       	int inputAddress = Integer.parseInt(in.readLine().toString());
+	       	System.out.println(dsdvList.get(inputNode).getNextHop(dsdvList.get(inputNode).getDeviceTableAddresses().get(inputAddress)));
 	        break;
 	     }
 	     case REACHABLE:{
