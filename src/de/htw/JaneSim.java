@@ -23,7 +23,7 @@ public class JaneSim extends Simulation {
 
 	@Override
 	public void initGlobalServices(ServiceUnit serviceUnit) {
-		CollisionFreeNetwork.createInstance(serviceUnit, 1024 * 100,true, true, true);
+		CollisionFreeNetwork.createInstance(serviceUnit, 1024 * 1000,true, true, true);
 		
 	}
 

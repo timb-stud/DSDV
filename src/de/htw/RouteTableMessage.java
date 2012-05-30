@@ -53,7 +53,7 @@ public class RouteTableMessage implements LinkLayerMessage, Serializable {
 	@Override
 	public int getSize() {
 		// TODO Auto-generated method stub
-		return 1024;
+		return 1024 * 100;
 	}
 
 }
