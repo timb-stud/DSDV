@@ -1,5 +1,9 @@
 package de.htw;
 
+import java.util.ArrayList;
+import java.util.LinkedList;
+import java.util.List;
+
 import de.uni_trier.jane.basetypes.Extent;
 import de.uni_trier.jane.basetypes.Position;
 import de.uni_trier.jane.basetypes.Rectangle;
@@ -19,8 +23,14 @@ import de.uni_trier.jane.simulation.dynamic.mobility_source.campus.FixedPosition
 import de.uni_trier.jane.simulation.kernel.TimeExceeded;
 
 
-public class JaneSim extends Simulation {
+public class JaneSim extends Simulation implements Runnable{
 
+	private ArrayList<DsdvService> testServiceList = new ArrayList<DsdvService>();
+	
+	public ArrayList<DsdvService> getDsdvServiceList(){
+		return testServiceList;
+	}
+	
 	@Override
 	public void initGlobalServices(ServiceUnit serviceUnit) {
 		CollisionFreeNetwork.createInstance(serviceUnit, 1024 * 1000,true, true, true);
@@ -40,6 +50,7 @@ public class JaneSim extends Simulation {
 
 		DsdvService testService = new DsdvService(linkLayerID, neighborID);
 		serviceUnit.addService(testService);
+		testServiceList.add(testService);
 	}
 
 	@Override

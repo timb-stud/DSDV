@@ -1,5 +1,6 @@
 package de.htw;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 
 import de.uni_trier.jane.basetypes.Address;
@@ -68,6 +69,22 @@ public class RoutingTable {
 		}
 	}
 	
+	public ArrayList<Address> getDeviceTableAddresses(){
+		ArrayList<Address> al = new ArrayList<Address>();
+		for(Address a : map.keySet())
+			al.add(a);
+		return al;
+	}
+	
+	public Address getDeviceAddress(){
+		for (Address a : map.keySet()){
+			DeviceRouteData drd = map.get(a);
+			if (drd.getDistanceToDestination() == 0)
+				return a;
+		}
+		return null;
+	}
+	
 	public Address getNextHop(Address deviceId){
 		return map.get(deviceId).getNextHop();
 	}
@@ -108,7 +125,7 @@ public class RoutingTable {
 				if(ownDrd.getSequenceNumber() < otherDrd.getSequenceNumber() 
 						|| (ownDrd.getSequenceNumber() == otherDrd.getSequenceNumber()
 						&& ownDrd.getDistanceToDestination() > otherDrd.getDistanceToDestination())){
-					System.out.println("put: " + otherDrd);
+					//System.out.println("put: " + otherDrd);
 					 map.put(a, otherDrd);
 					 hasChanged = true;
 				}
