@@ -48,9 +48,11 @@ public class JaneSim extends Simulation implements Runnable{
 		//Ref zum Nachbarschaftsservice
 		ServiceID neighborID = serviceUnit.getService(NeighborDiscoveryService.class);
 
-		DsdvService testService = new DsdvService(linkLayerID, neighborID);
-		serviceUnit.addService(testService);
-		testServiceList.add(testService);
+		DsdvService dsdvService = new DsdvService(linkLayerID, neighborID);
+		serviceUnit.addService(dsdvService);
+		testServiceList.add(dsdvService);
+		ChatService chatService = new ChatService(linkLayerID, neighborID, dsdvService);
+		serviceUnit.addService(chatService);
 	}
 
 	@Override

@@ -20,10 +20,10 @@ public class ChatService implements RuntimeService{
 	private LinkLayer_async linkLayer;
 	private DSDVService_sync dsdvService;
 	
-	
-	public ChatService(ServiceID linkLayerId, ServiceID neighborId) {
+	public ChatService(ServiceID linkLayerId, ServiceID neighborId, DSDVService_sync dsdvService) {
 		this.linkLayerId = linkLayerId;
 		this.neighborId = neighborId;
+		this.dsdvService = dsdvService;
 	}
 	
 	@Override
@@ -51,7 +51,6 @@ public class ChatService implements RuntimeService{
 		this.address = neighborDiscoveryServiceStub.getOwnAddress();
 		this.linkLayer = (LinkLayer_async)runtimeOperatingSystem.getSignalListenerStub(linkLayerId, LinkLayer_async.class);
 		runtimeOperatingSystem.registerAtService(linkLayerId, LinkLayer_async.class);
-		this.dsdvService = (DSDVService_sync)runtimeOperatingSystem.getSignalListenerStub(neighborId, DSDVService_sync.class);
 		this.runtimeOperatingSystem.registerAtService(neighborId, DSDVService_sync.class);
 	}
 
