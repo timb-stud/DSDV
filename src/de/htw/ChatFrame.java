@@ -10,6 +10,8 @@
  */
 package de.htw;
 
+import java.awt.TextArea;
+
 /**
  *
  * @author chrech
@@ -29,9 +31,12 @@ public class ChatFrame extends java.awt.Frame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        chatTextArea = new java.awt.TextArea();
+        chatTextArea = new java.awt.TextArea("", 0, 0, TextArea.SCROLLBARS_VERTICAL_ONLY);
+        chatTextArea.setEditable(false);
         messageTextField = new java.awt.TextField();
         sendButton = new java.awt.Button();
+        sendButton.setActionCommand("send-msg");
+        sendButton.setName("sendButton");
         contactList = new java.awt.List();
 
         addWindowListener(new java.awt.event.WindowAdapter() {
@@ -60,6 +65,7 @@ public class ChatFrame extends java.awt.Frame {
     }//GEN-LAST:event_exitForm
 
     private void sendButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_sendButtonActionPerformed
+    	System.out.println("CLICK:" + evt);
         // TODO add your handling code here:
     }//GEN-LAST:event_sendButtonActionPerformed
 
