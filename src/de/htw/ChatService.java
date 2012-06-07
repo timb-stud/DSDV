@@ -59,5 +59,12 @@ public class ChatService implements RuntimeService{
 		// TODO Auto-generated method stub
 		
 	}
+	
+	public void sendMessage(String message, Address sender, Address destination) {
+		ChatMessage msg = new ChatMessage(message, sender, destination);
+		LinkLayer_async linkLayer = (LinkLayer_async) runtimeOperatingSystem
+				.getSignalListenerStub(linkLayerId, LinkLayer_async.class);
+		linkLayer.sendUnicast(destination, msg);
+	}
 
 }

@@ -12,15 +12,25 @@ package de.htw;
 
 import java.awt.TextArea;
 
+import de.uni_trier.jane.service.network.link_layer.LinkLayer_async;
+import de.uni_trier.jane.service.operatingSystem.RuntimeOperatingSystem;
+
 /**
  *
  * @author chrech
  */
 public class ChatFrame extends java.awt.Frame {
+	
+	private ChatService chatService;
 
     /** Creates new form ChatFrame */
     public ChatFrame() {
         initComponents();
+    }
+    
+    public ChatFrame(ChatService chatService) {
+        initComponents();
+        this.chatService = chatService;
     }
 
     /** This method is called from within the constructor to
@@ -66,8 +76,11 @@ public class ChatFrame extends java.awt.Frame {
 
     private void sendButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_sendButtonActionPerformed
     	System.out.println("CLICK:" + evt);
-        // TODO add your handling code here:
-    }//GEN-LAST:event_sendButtonActionPerformed
+    	String message = this.messageTextField.toString();
+//    	Address sender = 
+//    	Address destination = this.contactList.
+//    	chatService.sendMessage(message, sender, destination);
+    }
 
     /**
      * @param args the command line arguments
