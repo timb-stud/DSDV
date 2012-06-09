@@ -77,9 +77,8 @@ public class ChatFrame extends java.awt.Frame {
     private void sendButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_sendButtonActionPerformed
     	System.out.println("CLICK:" + evt);
     	String message = this.messageTextField.toString();
-//    	Address sender = 
-//    	Address destination = this.contactList.
-//    	chatService.sendMessage(message, sender, destination);
+    	String destination = this.contactList.getSelectedItem();
+    	chatService.sendMessage(message, destination);
     }
 
     /**

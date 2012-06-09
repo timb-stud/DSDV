@@ -1,5 +1,7 @@
 package de.htw;
 
+import java.util.Set;
+
 import de.uni_trier.jane.basetypes.Address;
 import de.uni_trier.jane.basetypes.ServiceID;
 import de.uni_trier.jane.service.EndpointClassID;
@@ -60,11 +62,23 @@ public class ChatService implements RuntimeService{
 		
 	}
 	
-	public void sendMessage(String message, Address sender, Address destination) {
-		ChatMessage msg = new ChatMessage(message, sender, destination);
+	private Address getReachbleDeviceAddress(String address){
+		Set<Address> reachableAddresses = dsdvService.getAllReachableDevices();
+		for(Address a: reachableAddresses){
+			if(a.toString().equals(address)){
+				return a;
+			}
+		}
+		throw new RuntimeException("Device address unknown.");
+	}
+	
+	public void sendMessage(String message, String destination) {
+		Address sender = this.address;
+		Address destinationAddress = getReachbleDeviceAddress(destination);
+		ChatMessage msg = new ChatMessage(message, sender, destinationAddress);
 		LinkLayer_async linkLayer = (LinkLayer_async) runtimeOperatingSystem
 				.getSignalListenerStub(linkLayerId, LinkLayer_async.class);
-		linkLayer.sendUnicast(destination, msg);
+		linkLayer.sendUnicast(destinationAddress, msg);
 	}
 
 }
