@@ -8,23 +8,23 @@ public interface DSDVService_sync {
 
 /**
 *
-* @return Gibt alle erreichbaren Geräte zurück
+* @return all reachable devices
 */
 
 public Set getAllReachableDevices();
 
 /**
 *
-*@param Adresse des Zielhops
-*@return Gibt den nächsten Hop in Richtung des gewünschten Zieles zurück
+*@param destination Address
+*@return the next hop in direction of the given destination Address
 */
 
 public Address getNextHop(Address destination);
 
 /**
 *
-*@param Adresse des Zielhops
-*@return Gibt die Anzahl der Hops zu einem Ziel zurück
+*@param destination Address
+*@return the hop count for the given destination Address
 */
 
 public int getHopCount(Address destination);
