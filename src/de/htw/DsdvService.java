@@ -3,6 +3,7 @@ package de.htw;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Observable;
 import java.util.Set;
 
@@ -78,6 +79,7 @@ public class DsdvService extends Observable implements RuntimeService, NeighborD
 		tableCopy.incAllDistanceToDestination();
 		RouteTableMessage msg = new RouteTableMessage(tableCopy.getMap());
 		linkLayer.sendBroadcast(msg);
+		this.setChanged();
 		this.notifyObservers();
 	}
 
@@ -93,6 +95,7 @@ public class DsdvService extends Observable implements RuntimeService, NeighborD
 		RoutingTable tableCopy = table.copy();
 		RouteTableMessage msg = new RouteTableMessage(tableCopy.getMap());
 		linkLayer.sendBroadcast(msg);
+		this.setChanged();
 		this.notifyObservers();
 	}
 
@@ -129,6 +132,7 @@ public class DsdvService extends Observable implements RuntimeService, NeighborD
 
 			RouteTableMessage msg = new RouteTableMessage(tableCopy.getMap());
 			linkLayer.sendBroadcast(msg);
+			this.setChanged();
 			this.notifyObservers();
 		}
 	}
@@ -147,7 +151,7 @@ public class DsdvService extends Observable implements RuntimeService, NeighborD
 
 	@Override
 	public Set getAllReachableDevices() {
-		return table.getMap().entrySet();
+		return table.getAllReachableDevices(this.address);
 	}
 
 	@Override

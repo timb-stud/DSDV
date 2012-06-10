@@ -1,8 +1,6 @@
 package de.htw;
 
 import java.util.ArrayList;
-import java.util.LinkedList;
-import java.util.List;
 
 import de.uni_trier.jane.basetypes.Extent;
 import de.uni_trier.jane.basetypes.Position;
@@ -53,6 +51,10 @@ public class JaneSim extends Simulation implements Runnable{
 		testServiceList.add(dsdvService);
 		ChatService chatService = new ChatService(linkLayerID, neighborID, dsdvService);
 		serviceUnit.addService(chatService);
+		ChatFrame window = new ChatFrame(chatService);
+		dsdvService.addObserver(window);
+		chatService.addObserver(window);
+		window.setVisible(true);
 	}
 
 	@Override

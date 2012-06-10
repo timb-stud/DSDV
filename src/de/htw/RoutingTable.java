@@ -2,6 +2,8 @@ package de.htw;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Set;
 
 import de.uni_trier.jane.basetypes.Address;
 
@@ -99,6 +101,16 @@ public class RoutingTable {
 	
 	public DeviceRouteData getDeviceRouteDate(Address deviceAddress){
 		return map.get(deviceAddress);
+	}
+	
+	public Set<Address> getAllReachableDevices(Address ownAddress) {
+		HashSet<Address> set = new HashSet<Address>();
+		for(Address a: map.keySet()){
+			if(map.get(a).getDistanceToDestination() > -1 && !a.toString().equals(ownAddress.toString())){
+				set.add(a);
+			}
+		}
+		return set;
 	}
 	
 	public boolean isOwnReachabilityCorrect(HashMap<Address, DeviceRouteData> otherMap, Address deviceId){
