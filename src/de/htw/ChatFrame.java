@@ -11,15 +11,18 @@
 package de.htw;
 
 import java.awt.TextArea;
+import java.util.LinkedList;
+import java.util.Observable;
+import java.util.Observer;
+import java.util.Set;
 
-import de.uni_trier.jane.service.network.link_layer.LinkLayer_async;
-import de.uni_trier.jane.service.operatingSystem.RuntimeOperatingSystem;
+import de.uni_trier.jane.basetypes.Address;
 
 /**
  *
  * @author chrech
  */
-public class ChatFrame extends java.awt.Frame {
+public class ChatFrame extends java.awt.Frame implements Observer{
 	
 	private ChatService chatService;
 
@@ -29,8 +32,8 @@ public class ChatFrame extends java.awt.Frame {
     }
     
     public ChatFrame(ChatService chatService) {
+    	this.chatService = chatService;
         initComponents();
-        this.chatService = chatService;
     }
 
     /** This method is called from within the constructor to
@@ -98,4 +101,20 @@ public class ChatFrame extends java.awt.Frame {
     private java.awt.TextField messageTextField;
     private java.awt.Button sendButton;
     // End of variables declaration//GEN-END:variables
+    
+    private void updateContactList(Set<Address> contacts){
+    	contactList.removeAll();
+    	for(Address a: contacts){
+    		contactList.add(a.toString());
+    	}
+    }
+
+	@Override
+	public void update(Observable o, Object arg) {
+			if(o instanceof DsdvService){
+				DsdvService dsdvService = (DsdvService)o;
+				Set<Address> contacts = dsdvService.getAllReachableDevices();
+				updateContactList(contacts);
+			}
+	}
 }

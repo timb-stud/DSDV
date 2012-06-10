@@ -3,6 +3,7 @@ package de.htw;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Observable;
 import java.util.Set;
 
 import de.uni_trier.jane.basetypes.Address;
@@ -21,7 +22,7 @@ import de.uni_trier.jane.visualization.shapes.Shape;
 
 
 
-public class DsdvService implements RuntimeService, NeighborDiscoveryListener, DSDVService_sync {
+public class DsdvService extends Observable implements RuntimeService, NeighborDiscoveryListener, DSDVService_sync {
 
 	public static ServiceID serviceID;
 	private ServiceID linkLayerID;
@@ -77,6 +78,7 @@ public class DsdvService implements RuntimeService, NeighborDiscoveryListener, D
 		tableCopy.incAllDistanceToDestination();
 		RouteTableMessage msg = new RouteTableMessage(tableCopy.getMap());
 		linkLayer.sendBroadcast(msg);
+		this.notifyObservers();
 	}
 
 	@Override
@@ -91,6 +93,7 @@ public class DsdvService implements RuntimeService, NeighborDiscoveryListener, D
 		RoutingTable tableCopy = table.copy();
 		RouteTableMessage msg = new RouteTableMessage(tableCopy.getMap());
 		linkLayer.sendBroadcast(msg);
+		this.notifyObservers();
 	}
 
 	@Override
@@ -126,6 +129,7 @@ public class DsdvService implements RuntimeService, NeighborDiscoveryListener, D
 
 			RouteTableMessage msg = new RouteTableMessage(tableCopy.getMap());
 			linkLayer.sendBroadcast(msg);
+			this.notifyObservers();
 		}
 	}
 	
