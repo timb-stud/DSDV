@@ -1,5 +1,6 @@
 package de.htw;
 
+import java.util.Observable;
 import java.util.Set;
 
 import de.uni_trier.jane.basetypes.Address;
@@ -12,7 +13,7 @@ import de.uni_trier.jane.service.operatingSystem.RuntimeOperatingSystem;
 import de.uni_trier.jane.service.parameter.todo.Parameters;
 import de.uni_trier.jane.visualization.shapes.Shape;
 
-public class ChatService implements RuntimeService{
+public class ChatService extends Observable implements RuntimeService{
 	
 	private static ServiceID serviceId = new EndpointClassID(ChatService.class.getName());
 	private static ServiceID linkLayerId;
@@ -56,10 +57,15 @@ public class ChatService implements RuntimeService{
 		this.runtimeOperatingSystem.registerAtService(neighborId, DSDVService_sync.class);
 	}
 
-	public void handleMessage(Address sender, String message, Address originSender,
-			Address destination) {
-		// TODO Auto-generated method stub
-		
+	public void handleMessage(Address sender, String message, Address originSender, Address destination) {
+		if(destination.toString().equals(this.address.toString())){
+			String[] messageArr = {sender.toString(), message};
+			notifyObservers(messageArr);
+		} else {
+			ChatMessage chatMessage = new ChatMessage(message, originSender, destination);
+			Address receiver = dsdvService.getNextHop(destination);
+			linkLayer.sendUnicast(receiver, chatMessage);
+		}
 	}
 	
 	private Address getReachbleDeviceAddress(String address){

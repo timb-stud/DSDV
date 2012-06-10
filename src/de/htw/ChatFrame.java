@@ -102,6 +102,12 @@ public class ChatFrame extends java.awt.Frame implements Observer{
     private java.awt.Button sendButton;
     // End of variables declaration//GEN-END:variables
     
+    
+    private void displayChatMessage(String sender, String message){
+    	String text = "(" + sender + "): " + message + "\n";
+    	chatTextArea.append(text);
+    }
+    
     private void updateContactList(Set<Address> contacts){
     	contactList.removeAll();
     	for(Address a: contacts){
@@ -115,6 +121,14 @@ public class ChatFrame extends java.awt.Frame implements Observer{
 				DsdvService dsdvService = (DsdvService)o;
 				Set<Address> contacts = dsdvService.getAllReachableDevices();
 				updateContactList(contacts);
+			}else if(o instanceof ChatService){
+				ChatService chatService = (ChatService)o;
+				if(arg instanceof String){
+					String[] messageArr = (String[])arg;
+					String sender = messageArr[0];
+					String message = messageArr[1];
+					displayChatMessage(sender, message);
+				}
 			}
 	}
 }
