@@ -78,10 +78,12 @@ public class ChatFrame extends java.awt.Frame implements Observer{
     }//GEN-LAST:event_exitForm
 
     private void sendButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_sendButtonActionPerformed
-    	String message = this.messageTextField.getText();
     	String destination = this.contactList.getSelectedItem();
-    	chatService.sendMessage(message, destination);
-    	this.displayChatMessage("", destination, message); //TODO get your own Address from somewhere.
+    	if(destination != null){
+    		String message = this.messageTextField.getText();
+    		chatService.sendMessage(message, destination);
+        	this.displayChatMessage("", destination, message); //TODO get your own Address from somewhere.
+    	}
     }
 
     /**
