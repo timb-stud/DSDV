@@ -127,8 +127,7 @@ public class ChatFrame extends java.awt.Frame implements Observer{
 				Set<Address> contacts = dsdvService.getAllReachableDevices();
 				updateContactList(contacts);
 			}else if(o instanceof ChatService){
-				ChatService chatService = (ChatService)o;
-				if(arg instanceof String){
+				if(arg instanceof String[]){
 					String[] messageArr = (String[])arg;
 					String sender = messageArr[0];
 					String message = messageArr[1];

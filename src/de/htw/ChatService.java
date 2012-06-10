@@ -58,7 +58,7 @@ public class ChatService extends Observable implements RuntimeService{
 
 	public void handleMessage(Address sender, String message, Address originSender, Address destination) {
 		if(destination.toString().equals(this.address.toString())){
-			String[] messageArr = {sender.toString(), message};
+			String[] messageArr = {originSender.toString(), message};
 			this.setChanged();
 			this.notifyObservers(messageArr);
 		} else {
@@ -82,9 +82,7 @@ public class ChatService extends Observable implements RuntimeService{
 		Address sender = this.address;
 		Address destinationAddress = getReachbleDeviceAddress(destination);
 		ChatMessage msg = new ChatMessage(message, sender, destinationAddress);
-		LinkLayer_async linkLayer = (LinkLayer_async) runtimeOperatingSystem
-				.getSignalListenerStub(linkLayerId, LinkLayer_async.class);
-		linkLayer.sendUnicast(destinationAddress, msg);
+		linkLayer.sendUnicast(dsdvService.getNextHop(destinationAddress), msg);
 	}
 
 }

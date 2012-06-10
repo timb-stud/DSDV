@@ -26,10 +26,7 @@ public class RouteTableMessage implements LinkLayerMessage, Serializable {
 
 	@Override
 	public void handle(LinkLayerInfo info, SignalListener listener) {
-		//System.out.println("Sende Nachricht von: "+ sender);
-		
 		((DsdvService)listener).handleMessage(info.getSender(), routeTable);
-
 	}
 
 	@Override

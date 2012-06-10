@@ -137,7 +137,6 @@ public class RoutingTable {
 				if(ownDrd.getSequenceNumber() < otherDrd.getSequenceNumber() 
 						|| (ownDrd.getSequenceNumber() == otherDrd.getSequenceNumber()
 						&& ownDrd.getDistanceToDestination() > otherDrd.getDistanceToDestination())){
-					//System.out.println("put: " + otherDrd);
 					 map.put(a, otherDrd);
 					 hasChanged = true;
 				}
