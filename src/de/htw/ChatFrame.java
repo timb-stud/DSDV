@@ -78,10 +78,10 @@ public class ChatFrame extends java.awt.Frame implements Observer{
     }//GEN-LAST:event_exitForm
 
     private void sendButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_sendButtonActionPerformed
-    	System.out.println("CLICK:" + evt);
-    	String message = this.messageTextField.toString();
+    	String message = this.messageTextField.getText();
     	String destination = this.contactList.getSelectedItem();
     	chatService.sendMessage(message, destination);
+    	this.displayChatMessage("", destination, message); //TODO get your own Address from somewhere.
     }
 
     /**
@@ -105,6 +105,11 @@ public class ChatFrame extends java.awt.Frame implements Observer{
     
     private void displayChatMessage(String sender, String message){
     	String text = "(" + sender + "): " + message + "\n";
+    	chatTextArea.append(text);
+    }
+    
+    private void displayChatMessage(String sender, String destination, String message){
+    	String text = "(" + sender + "->" + destination + "): " + message + "\n";
     	chatTextArea.append(text);
     }
     
