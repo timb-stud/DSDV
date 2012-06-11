@@ -21,12 +21,17 @@ public class ChatService extends Observable implements RuntimeService{
 	private RuntimeOperatingSystem runtimeOperatingSystem;
 	private Address address;
 	private LinkLayer_async linkLayer;
-	private DSDVService_sync dsdvService;
+	private DsdvService dsdvService;
 	
-	public ChatService(ServiceID linkLayerId, ServiceID neighborId, DSDVService_sync dsdvService) {
+	public ChatService(ServiceID linkLayerId, ServiceID neighborId, DsdvService dsdvService) {
 		this.linkLayerId = linkLayerId;
 		this.neighborId = neighborId;
 		this.dsdvService = dsdvService;
+		
+		ChatFrame window = new ChatFrame(this);
+		dsdvService.addObserver(window);
+		this.addObserver(window);
+		window.setVisible(true);
 	}
 	
 	@Override

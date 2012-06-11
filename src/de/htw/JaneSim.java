@@ -51,10 +51,10 @@ public class JaneSim extends Simulation implements Runnable{
 		testServiceList.add(dsdvService);
 		ChatService chatService = new ChatService(linkLayerID, neighborID, dsdvService);
 		serviceUnit.addService(chatService);
-		ChatFrame window = new ChatFrame(chatService);
-		dsdvService.addObserver(window);
-		chatService.addObserver(window);
-		window.setVisible(true);
+//		ChatFrame window = new ChatFrame(chatService);
+//		dsdvService.addObserver(window);
+//		chatService.addObserver(window);
+//		window.setVisible(true);
 	}
 
 	@Override
