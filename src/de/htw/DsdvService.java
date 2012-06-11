@@ -115,6 +115,8 @@ public class DsdvService extends Observable implements RuntimeService, NeighborD
 		runtimeOperatingSystem.registerAtService(neighborID, NeighborDiscoveryService.class);
 		
 		table.put(this.address, this.address, 0, 0);
+		this.setChanged();
+		this.notifyObservers();
 	}
 	
 
@@ -138,7 +140,10 @@ public class DsdvService extends Observable implements RuntimeService, NeighborD
 	}
 	
 	public Address getDeviceAddress(){
-		return table.getDeviceAddress();
+		Address a = table.getDeviceAddress();
+		if (a != null)
+			return a;
+		throw new RuntimeException("Own Address not found.");
 	}
 	
 	public ArrayList<Address> getDeviceTableAddresses(){

@@ -54,6 +54,7 @@ public class JaneSim extends Simulation implements Runnable{
 		ChatFrame window = new ChatFrame(chatService);
 		dsdvService.addObserver(window);
 		chatService.addObserver(window);
+		//window.setTitle(dsdvService.getDeviceAddress().toString()); //TODO: implemented in Observer-Update in ChatFrame
 		window.setVisible(true);
 	}
 
