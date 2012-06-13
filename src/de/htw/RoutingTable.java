@@ -96,7 +96,8 @@ public class RoutingTable {
 	}
 	
 	public HashMap<Address, DeviceRouteData> getMap() {
-		return map;
+		HashMap<Address, DeviceRouteData> m = new HashMap<Address, DeviceRouteData>(map);
+		return m;
 	}
 	
 	public DeviceRouteData getDeviceRouteDate(Address deviceAddress){

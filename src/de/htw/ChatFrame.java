@@ -10,8 +10,9 @@
  */
 package de.htw;
 
+import java.awt.Dimension;
+import java.awt.Font;
 import java.awt.TextArea;
-import java.util.LinkedList;
 import java.util.Observable;
 import java.util.Observer;
 import java.util.Set;
@@ -44,14 +45,18 @@ public class ChatFrame extends java.awt.Frame implements Observer{
      */
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
-
+    	Font arialFont = new Font("Arial", Font.PLAIN, 40);
         chatTextArea = new java.awt.TextArea("", 0, 0, TextArea.SCROLLBARS_VERTICAL_ONLY);
         chatTextArea.setEditable(false);
+        chatTextArea.setFont(arialFont);
         messageTextField = new java.awt.TextField();
+        messageTextField.setFont(arialFont);
         sendButton = new java.awt.Button();
         sendButton.setActionCommand("send-msg");
         sendButton.setName("sendButton");
+        sendButton.setFont(arialFont);
         contactList = new java.awt.List();
+        contactList.setFont(arialFont);
 
         addWindowListener(new java.awt.event.WindowAdapter() {
             public void windowClosing(java.awt.event.WindowEvent evt) {
@@ -106,8 +111,8 @@ public class ChatFrame extends java.awt.Frame implements Observer{
     // End of variables declaration//GEN-END:variables
     
     
-    private void displayChatMessage(String sender, String message){
-    	String text = "(" + sender + "): " + message + "\n";
+    private void displayChatMessageAndHop(String sender, String message, String hopCount){
+    	String text = "hc:" + hopCount + " (" + sender + "): " + message + "\n";
     	chatTextArea.append(text);
     }
     
@@ -138,7 +143,8 @@ public class ChatFrame extends java.awt.Frame implements Observer{
 					String[] messageArr = (String[])arg;
 					String sender = messageArr[0];
 					String message = messageArr[1];
-					displayChatMessage(sender, message);
+					String hopCount = messageArr[2];
+					displayChatMessageAndHop(sender, message, hopCount);
 				}
 			}
 	}

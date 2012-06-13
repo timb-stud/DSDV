@@ -62,7 +62,8 @@ public class ExecutionPlatform_HTW extends ExecutionPlatform {
 	}
 
 	public static void main(String[] args) {
-
+		ExecutionPlatform_HTW eph = new ExecutionPlatform_HTW();
+		eph.run();
 	}
 
 }

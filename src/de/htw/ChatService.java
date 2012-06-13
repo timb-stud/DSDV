@@ -58,7 +58,7 @@ public class ChatService extends Observable implements RuntimeService{
 
 	public void handleMessage(Address sender, String message, Address originSender, Address destination) {
 		if(destination.toString().equals(this.address.toString())){
-			String[] messageArr = {originSender.toString(), message};
+			String[] messageArr = {originSender.toString(), message, String.valueOf(dsdvService.getHopCount(originSender))};
 			this.setChanged();
 			this.notifyObservers(messageArr);
 		} else {
