@@ -128,8 +128,10 @@ public class ChatFrame extends java.awt.Frame implements Observer{
 			if(o instanceof DsdvService){
 				DsdvService dsdvService = (DsdvService)o;
 				Set<Address> contacts = dsdvService.getAllReachableDevices();
-				ownAddressSring = dsdvService.getDeviceAddress().toString();
-				this.setTitle("Own device address: " + ownAddressSring);
+				if (ownAddressSring == "unknown"){
+					ownAddressSring = dsdvService.getDeviceAddress().toString();
+					this.setTitle("Own device address: " + ownAddressSring);
+				}
 				updateContactList(contacts);
 			}else if(o instanceof ChatService){
 				if(arg instanceof String[]){
