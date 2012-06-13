@@ -13,6 +13,10 @@ package de.htw;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.TextArea;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.util.Observable;
 import java.util.Observer;
 import java.util.Set;
@@ -72,6 +76,12 @@ public class ChatFrame extends java.awt.Frame implements Observer{
                 sendButtonActionPerformed(evt);
             }
         });
+        messageTextField.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                sendButtonActionPerformed(evt);
+            }
+        });
+        
         add(sendButton, java.awt.BorderLayout.NORTH);
         add(contactList, java.awt.BorderLayout.WEST);
 
@@ -82,7 +92,7 @@ public class ChatFrame extends java.awt.Frame implements Observer{
     private void exitForm(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_exitForm
         System.exit(0);
     }//GEN-LAST:event_exitForm
-
+    
     private void sendButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_sendButtonActionPerformed
     	String destination = this.contactList.getSelectedItem();
     	if(destination != null){
