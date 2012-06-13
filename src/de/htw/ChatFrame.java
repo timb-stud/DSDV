@@ -25,6 +25,7 @@ import de.uni_trier.jane.basetypes.Address;
 public class ChatFrame extends java.awt.Frame implements Observer{
 	
 	private ChatService chatService;
+	private String ownAddressSring = "unknown" ;
 
     /** Creates new form ChatFrame */
     public ChatFrame() {
@@ -82,10 +83,10 @@ public class ChatFrame extends java.awt.Frame implements Observer{
     	if(destination != null){
     		String message = this.messageTextField.getText();
     		chatService.sendMessage(message, destination);
-        	this.displayChatMessage("", destination, message); //TODO get your own Address from somewhere.
+        	this.displayChatMessage(ownAddressSring, destination, message);
     	}
     }
-
+    
     /**
      * @param args the command line arguments
      */
@@ -127,6 +128,8 @@ public class ChatFrame extends java.awt.Frame implements Observer{
 			if(o instanceof DsdvService){
 				DsdvService dsdvService = (DsdvService)o;
 				Set<Address> contacts = dsdvService.getAllReachableDevices();
+				ownAddressSring = dsdvService.getDeviceAddress().toString();
+				this.setTitle("Own device address: " + ownAddressSring);
 				updateContactList(contacts);
 			}else if(o instanceof ChatService){
 				if(arg instanceof String[]){

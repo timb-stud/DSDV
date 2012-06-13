@@ -78,6 +78,10 @@ public class ChatService extends Observable implements RuntimeService{
 		throw new RuntimeException("Device address unknown.");
 	}
 	
+//	public Address getOwnAddress(){
+//		throw new RuntimeException("Own Address not found.");
+//	}
+	
 	public void sendMessage(String message, String destination) {
 		Address sender = this.address;
 		Address destinationAddress = getReachbleDeviceAddress(destination);
